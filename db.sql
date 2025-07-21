@@ -2,46 +2,48 @@ CREATE DATABASE HabitTracker;
 USE HabitTracker;
 -- Bảng Người Dùng
 -- Bảng Người Dùng
-CREATE TABLE NguoiDung (
-  TenNguoiDung VARCHAR(50) PRIMARY KEY,
-  Email VARCHAR(100) UNIQUE,
-  MatKhau VARCHAR(255),
-  NgayTao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Bảng người dùng
+CREATE TABLE nguoidung (
+  tennguoidung VARCHAR(50) PRIMARY KEY,
+  email VARCHAR(100) UNIQUE,
+  matkhau VARCHAR(255),
+  ngaytao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng Thói Quen
-CREATE TABLE ThoiQuen (
-  MaThoiQuen SERIAL PRIMARY KEY,
-  TieuDe VARCHAR(100),
-  MoTa TEXT,
-  NguoiTao VARCHAR(50) REFERENCES NguoiDung(TenNguoiDung),
-  NgayTao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Bảng thói quen
+CREATE TABLE thoiquen (
+  mathoiquen SERIAL PRIMARY KEY,
+  tieude VARCHAR(100),
+  mota TEXT,
+  nguoitao VARCHAR(50) REFERENCES nguoidung(tennguoidung),
+  ngaytao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bảng Người Dùng - Thói Quen (nhiều-nhiều)
-CREATE TABLE NguoiDung_ThoiQuen (
-  TenNguoiDung VARCHAR(50),
-  MaThoiQuen INT,
-  NgayBatDau DATE,
-  MucTieuHangNgay INT,
-  DonVi VARCHAR(50),
-  PRIMARY KEY (TenNguoiDung, MaThoiQuen),
-  FOREIGN KEY (TenNguoiDung) REFERENCES NguoiDung(TenNguoiDung),
-  FOREIGN KEY (MaThoiQuen) REFERENCES ThoiQuen(MaThoiQuen)
+-- Bảng người dùng - thói quen (nhiều-nhiều)
+CREATE TABLE nguoidung_thoiquen (
+  tennguoidung VARCHAR(50),
+  mathoiquen INT,
+  ngaybatdau DATE,
+  muctieuhangngay INT,
+  donvi VARCHAR(50),
+  PRIMARY KEY (tennguoidung, mathoiquen),
+  FOREIGN KEY (tennguoidung) REFERENCES nguoidung(tennguoidung),
+  FOREIGN KEY (mathoiquen) REFERENCES thoiquen(mathoiquen)
 );
 
 -- Bảng theo dõi tiến độ
-CREATE TABLE TheoDoiThoiQuen (
-  MaGhiNhan SERIAL PRIMARY KEY,
-  TenNguoiDung VARCHAR(50),
-  MaThoiQuen INT,
-  Ngay DATE,
-  TrangThai BOOLEAN,
-  GiaTriDatDuoc INT,
-  UNIQUE (TenNguoiDung, MaThoiQuen, Ngay),
-  FOREIGN KEY (TenNguoiDung) REFERENCES NguoiDung(TenNguoiDung),
-  FOREIGN KEY (MaThoiQuen) REFERENCES ThoiQuen(MaThoiQuen)
+CREATE TABLE theodoithoiquen (
+  maghinhan SERIAL PRIMARY KEY,
+  tennguoidung VARCHAR(50),
+  mathoiquen INT,
+  ngay DATE,
+  trangthai BOOLEAN,
+  giatridatduoc INT,
+  UNIQUE (tennguoidung, mathoiquen, ngay),
+  FOREIGN KEY (tennguoidung) REFERENCES nguoidung(tennguoidung),
+  FOREIGN KEY (mathoiquen) REFERENCES thoiquen(mathoiquen)
 );
+
 
 
 INSERT INTO NguoiDung (TenNguoiDung, Email, MatKhau)

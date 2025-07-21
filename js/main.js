@@ -13,7 +13,7 @@ form.addEventListener('submit', async (e) => {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
 
-    const { data, error } = await db.from('Habits').insert([{ title, description }]);
+    const { data, error } = await db.from('thoiquen').insert([{ title, description }]);
 
     if (!error) {
         alert('Habit added!');
@@ -26,7 +26,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 async function loadHabits() {
-    const { data, error } = await db.from('Habits').select('*');
+    const { data, error } = await db.from('thoiquen').select('*');
     habitList.innerHTML = '';
     if (data) {
         data.forEach((habit) => {

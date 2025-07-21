@@ -13,7 +13,7 @@ form.addEventListener('submit', async (e) => {
     const description = document.getElementById('description').value;
 
     const { data, error } = await db.from('thoiquen').insert([
-        { TieuDe: title, MoTa: description }
+        { TieuDe: title, mota: description }
     ]);
 
     if (!error) {
@@ -32,7 +32,7 @@ async function loadHabits() {
     if (data && data.length > 0) {
         data.forEach((habit) => {
             const li = document.createElement('li');
-            li.textContent = `${habit.TieuDe}: ${habit.MoTa}`;
+            li.textContent = `${habit.TieuDe}: ${habit.mota}`;
             habitList.appendChild(li);
         });
     } else if (error) {
